@@ -240,6 +240,29 @@
 
     .cta-call:hover { background: rgba(255,255,255,0.12); }
 
+    .cta-save {
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.15);
+      margin-top: 10px;
+      width: 100%;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      transition: all 0.2s;
+    }
+
+    .cta-save:hover { background: rgba(255,255,255,0.06); color: white; }
+    .cta-save svg { width: 15px; height: 15px; }
+
     /* CONTENT */
     .content { padding: 0 24px; }
 
@@ -627,7 +650,24 @@
         Call Me
       </button>
     </div>
+    <button class="cta-save" onclick="saveContact()">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      Save Contact
+    </button>
   </section>
+
+  <script>
+    function saveContact() {
+      const vcard = "BEGIN:VCARD\nVERSION:3.0\nFN:Thabo Mokoena\nORG:Ciro\nTITLE:Senior Sales Consultant\nTEL;TYPE=CELL:+27710000000\nEMAIL:thabo.mokoena@ciro.co.za\nNOTE:Gauteng Region\nEND:VCARD";
+      const blob = new Blob([vcard], { type: 'text/vcard' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'thabo-mokoena.vcf';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
 
   <!-- CONTENT -->
   <div class="content">

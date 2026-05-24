@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a1a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 24px 16px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .phone-frame {
+    width: 100%;
+    max-width: 380px;
+    background: #f5f5f5;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 2px #333;
+  }
+  .notch {
+    background: #111;
+    height: 28px;
+    width: 120px;
+    border-radius: 0 0 18px 18px;
+    margin: 0 auto;
+  }
+  .portal { background: #ffffff; }
+  .portal-header {
+    background: #CC0000;
+    padding: 28px 24px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .portal-header::before {
+    content: '';
+    position: absolute;
+    bottom: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 50%;
+  }
+  .ciro-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+  .logo-box {
+    background: white; color: #CC0000;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px; padding: 4px 10px;
+    border-radius: 4px; letter-spacing: 1px;
+  }
+  .logo-sub { color: rgba(255,255,255,0.8); font-size: 9px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; }
+  .consultant-row { display: flex; align-items: center; gap: 16px; position: relative; z-index: 2; }
+  .avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: #111; border: 3px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: white; flex-shrink: 0;
+  }
+  .consultant-info h1 { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: white; letter-spacing: 1px; line-height: 1; margin-bottom: 4px; }
+  .consultant-info .title { color: rgba(255,255,255,0.85); font-size: 12px; font-weight: 500; margin-bottom: 2px; }
+  .region-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(0,0,0,0.25); color: white;
+    font-size: 10px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 8px; border-radius: 20px; margin-top: 4px;
+  }
+  .action-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 20px 20px 0; }
+  .action-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; padding: 16px 10px; border-radius: 14px; border: none; cursor: pointer; text-decoration: none;
+  }
+  .action-btn.primary { background: #CC0000; color: white; }
+  .action-btn.secondary { background: #111111; color: white; }
+  .action-btn .btn-icon { font-size: 20px; }
+  .action-btn .btn-label { font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; }
+  .section { padding: 20px 20px 0; }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; color: #999; text-transform: uppercase; margin-bottom: 12px; }
+  .about-card { background: #f8f8f8; border-radius: 14px; padding: 16px; border-left: 3px solid #CC0000; }
+  .about-card p { font-size: 13px; color: #444; line-height: 1.6; }
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { background: #f0f0f0; color: #222; font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 20px; }
+  .tag.red { background: #CC0000; color: white; }
+  .link-list { display: flex; flex-direction: column; gap: 10px; }
+  .link-btn {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; background: #f8f8f8; border-radius: 12px;
+    text-decoration: none; color: #111; font-size: 13px; font-weight: 500;
+    border: none; cursor: pointer; width: 100%; text-align: left;
+  }
+  .link-btn .left { display: flex; align-items: center; gap: 10px; }
+  .link-icon { width: 32px; height: 32px; background: #111; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+  .link-icon.red { background: #CC0000; }
+  .link-arrow { color: #bbb; font-size: 16px; }
+  .docs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .doc-btn {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+    padding: 14px; background: #f8f8f8; border-radius: 14px; border: none;
+    cursor: pointer; text-align: left; position: relative; overflow: hidden;
+  }
+  .doc-btn::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #CC0000; }
+  .doc-icon { width: 36px; height: 36px; background: #111; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 17px; }
+  .doc-label { font-size: 11px; font-weight: 600; color: #222; line-height: 1.3; }
+  .doc-sub { font-size: 10px; color: #999; }
+  .internal-btn {
+    margin: 20px; padding: 14px 16px; background: #111; border-radius: 14px;
+    display: flex; align-items: center; justify-content: space-between;
+    border: none; cursor: pointer; width: calc(100% - 40px);
+  }
+  .internal-left { display: flex; align-items: center; gap: 10px; }
+  .lock-icon { width: 32px; height: 32px; background: #CC0000; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .internal-text .label { color: white; font-size: 12px; font-weight: 600; }
+  .internal-text .sub { color: #666; font-size: 10px; }
+  .internal-arrow { color: #444; font-size: 16px; }
+  .portal-footer { padding: 16px 20px 32px; text-align: center; }
+  .footer-logo { display: inline-flex; align-items: center; gap: 6px; opacity: 0.35; }
+  .footer-p { width: 16px; height: 16px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; color: white; font-weight: 700; }
+  .footer-text { font-size: 10px; color: #888; letter-spacing: 1px; text-transform: uppercase; }
+  .divider { height: 1px; background: #efefef; margin: 20px 20px 0; }
+</style>
+</head>
+<body>
+<div class="phone-frame">
+  <div class="notch"></div>
+  <div class="portal">
+    <div class="portal-header">
+      <div class="ciro-logo">
+        <div class="logo-box">ciro</div>
+        <div class="logo-sub">Full Service Beverage Co.</div>
+      </div>
+      <div class="consultant-row">
+        <div class="avatar">TM</div>
+        <div class="consultant-info">
+          <h1>Thabo Mokoena</h1>
+          <div class="title">Senior Sales Consultant</div>
+          <div class="region-badge">Gauteng Region</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <button class="action-btn primary">
+        <span class="btn-icon">💬</span>
+        <span class="btn-label">WhatsApp</span>
+      </button>
+      <button class="action-btn secondary">
+        <span class="btn-icon">📞</span>
+        <span class="btn-label">Call Me</span>
+      </button>
+    </div>
+
+    <div class="section" style="margin-top:20px">
+      <div class="section-title">About</div>
+      <div class="about-card">
+        <p>I help hospitality and corporate clients find the right coffee and beverage solution for their space. Based in Johannesburg with 8 years at Ciro.</p>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:20px">
+      <div class="section-title">Focus Areas</div>
+      <div class="tags">
+        <span class="tag red">Hospitality</span>
+        <span class="tag">Corporate</span>
+        <span class="tag">Forecourts</span>
+        <span class="tag">Equipment</span>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:20px">
+      <div class="section-title">Quick Links</div>
+      <div class="link-list">
+        <button class="link-btn">
+          <div class="left"><div class="link-icon red">🛍️</div><span>Browse Ciro Products</span></div>
+          <span class="link-arrow">›</span>
+        </button>
+        <button class="link-btn">
+          <div class="left"><div class="link-icon">☕</div><span>Equipment Range</span></div>
+          <span class="link-arrow">›</span>
+        </button>
+        <button class="link-btn">
+          <div class="left"><div class="link-icon">🌐</div><span>Ciro Website</span></div>
+          <span class="link-arrow">›</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section" style="margin-top:20px">
+      <div class="section-title">Sales Resources</div>
+      <div class="docs-grid">
+        <button class="doc-btn">
+          <div class="doc-icon">📋</div>
+          <div class="doc-label">Product Catalogue</div>
+          <div class="doc-sub">Latest range</div>
+        </button>
+        <button class="doc-btn">
+          <div class="doc-icon">⚙️</div>
+          <div class="doc-label">Equipment Brochure</div>
+          <div class="doc-sub">Full range</div>
+        </button>
+        <button class="doc-btn">
+          <div class="doc-icon">☕</div>
+          <div class="doc-label">Services Overview</div>
+          <div class="doc-sub">What we offer</div>
+        </button>
+        <button class="doc-btn">
+          <div class="doc-icon">📝</div>
+          <div class="doc-label">Order Form</div>
+          <div class="doc-sub">New clients</div>
+        </button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section" style="margin-top:20px">
+      <div class="section-title">Get In Touch</div>
+      <div style="background:#f8f8f8; border-radius:14px; padding:16px; display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <label style="font-size:10px; font-weight:600; color:#999; letter-spacing:1px; text-transform:uppercase;">Full Name</label>
+          <div style="background:white; border:1.5px solid #ebebeb; border-radius:10px; padding:11px 14px; font-size:13px; color:#bbb;">Jane Smith</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <label style="font-size:10px; font-weight:600; color:#999; letter-spacing:1px; text-transform:uppercase;">Company</label>
+          <div style="background:white; border:1.5px solid #ebebeb; border-radius:10px; padding:11px 14px; font-size:13px; color:#bbb;">Acme Hotels</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <label style="font-size:10px; font-weight:600; color:#999; letter-spacing:1px; text-transform:uppercase;">Email</label>
+          <div style="background:white; border:1.5px solid #ebebeb; border-radius:10px; padding:11px 14px; font-size:13px; color:#bbb;">jane@acmehotels.co.za</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <label style="font-size:10px; font-weight:600; color:#999; letter-spacing:1px; text-transform:uppercase;">Phone Number</label>
+          <div style="background:white; border:1.5px solid #ebebeb; border-radius:10px; padding:11px 14px; font-size:13px; color:#bbb;">071 000 0000</div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px;">
+          <label style="font-size:10px; font-weight:600; color:#999; letter-spacing:1px; text-transform:uppercase;">Message</label>
+          <div style="background:white; border:1.5px solid #ebebeb; border-radius:10px; padding:11px 14px; font-size:13px; color:#bbb; min-height:64px;">Interested in equipment for our new property...</div>
+        </div>
+        <button style="background:#CC0000; color:white; border:none; border-radius:10px; padding:14px; font-size:13px; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; cursor:pointer; margin-top:4px;">Send Message</button>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <button class="internal-btn">
+      <div class="internal-left">
+        <div class="lock-icon">🔒</div>
+        <div class="internal-text">
+          <div class="label">Internal Access</div>
+          <div class="sub">Staff only</div>
+        </div>
+      </div>
+      <span class="internal-arrow">›</span>
+    </button>
+
+    <div class="portal-footer">
+      <div class="footer-logo">
+        <div class="footer-p">P</div>
+        <span class="footer-text">Powered by Portale</span>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
